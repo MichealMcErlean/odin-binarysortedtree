@@ -127,4 +127,22 @@ export class Tree {
       console.log(e);
     }
   }
+
+  inOrderForEach(callback) {
+    if (!callback) {
+      throw new Error("Callback required as argument!");
+    }
+    try {
+      this.recurInOrderForEach(callback, this.root);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  recurInOrderForEach(callback, root) {
+    if (root === null) return;
+    this.recurInOrderForEach(callback, root.left);
+    callback(root);
+    this.recurInOrderForEach(callback, root.right);
+  }
 }

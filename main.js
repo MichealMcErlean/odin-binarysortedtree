@@ -46,4 +46,7 @@ prettyPrint(testTree.root);
 testTree.levelOrderForEach((node) => {
   console.log(node.data);
 });
-testTree.levelOrderForEach();
+// testTree.levelOrderForEach();
+testTree.inOrderForEach((node) => {
+  console.log(node.data);
+});
