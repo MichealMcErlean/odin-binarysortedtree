@@ -218,4 +218,66 @@ export class Tree {
     }
     return depth;
   }
+
+  isBalanced() {
+    let root = this.root;
+    let heightLeft, heightRight, balanceLeft, balanceRight;
+    if(root.left) {
+      heightLeft = this.height(root.left.data);
+    } else {
+      heightLeft = 0;
+    }
+    if (root.right) {
+      heightRight = this.height(root.right.data);
+    } else {
+      heightRight = 0;
+    }
+    balanceLeft = this.recurIsBalanced(root.left);
+    balanceRight = this.recurIsBalanced(root.right);
+
+    if (
+      balanceLeft == true &&
+      balanceRight == true &&
+      Math.abs(heightLeft - heightRight) <= 1
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  recurIsBalanced(root) {
+    if (root === null) return true;
+    let heightLeft, heightRight, balanceLeft, balanceRight;
+    if(root.left) {
+      heightLeft = this.height(root.left.data);
+    } else {
+      heightLeft = 0;
+    }
+    if (root.right) {
+      heightRight = this.height(root.right.data);
+    } else {
+      heightRight = 0;
+    }
+    balanceLeft = this.recurIsBalanced(root.left);
+    balanceRight = this.recurIsBalanced(root.right);
+
+    if (
+      balanceLeft == true &&
+      balanceRight == true &&
+      Math.abs(heightLeft - heightRight) <= 1
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  rebalance() {
+    let newArray = [];
+    this.levelOrderForEach((node) => {
+      newArray.push(node.data);
+    });
+    this.root = this.buildTree(newArray);
+  }
 }

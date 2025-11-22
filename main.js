@@ -23,44 +23,45 @@ function randomArray(length = 15, range = 100) {
   }
 };
 
-let testArray = randomArray();
-console.log(testArray);
-let testTree = new Tree(testArray);
-prettyPrint(testTree.root);
-testTree.insertValue(47);
-prettyPrint(testTree.root);
-testTree.deleteValue(47);
-prettyPrint(testTree.root);
+function multiPrintArray(tree) {
+  console.log('Level-order:');
+  let tmp = [];
+  tree.levelOrderForEach((node) => {
+    tmp.push(node.data);
+  });
+  console.log(tmp);
+  console.log('Pre-order:')
+  tmp = [];
+  tree.preOrderForEach((node) => {
+    tmp.push(node.data);
+  });
+  console.log(tmp);
+  console.log('Post-order:')
+  tmp = [];
+  tree.postOrderForEach((node) => {
+    tmp.push(node.data);
+  });
+  console.log(tmp);
+  console.log('In-order:')
+  tmp = [];
+  tree.inOrderForEach((node) => {
+    tmp.push(node.data);
+  });
+  console.log(tmp);
+}
 
-testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-testTree = new Tree(testArray);
-testTree.insertValue(47);
-prettyPrint(testTree.root);
-testTree.deleteValue(47);
-prettyPrint(testTree.root);
-// testTree.deleteValue(4);
-// prettyPrint(testTree.root);
-// console.log(testTree.find(7));
-// console.log(testTree.find(13));
-// console.log(testTree.find(18));
-testTree.levelOrderForEach((node) => {
-  console.log(node.data);
-});
-// testTree.levelOrderForEach();
-testTree.inOrderForEach((node) => {
-  console.log(node.data);
-});
-testTree.preOrderForEach((node) => {
-  console.log(node.data);
-});
-testTree.postOrderForEach((node) => {
-  console.log(node.data);
-});
-prettyPrint(testTree.root);
-console.log(testTree.height(4));
-console.log(testTree.height(11));
-console.log(testTree.height(19));
-prettyPrint(testTree.root);
-console.log(testTree.depth(9));
-console.log(testTree.depth(6));
-console.log(testTree.depth(8));
+let array = randomArray(10);
+let myTree = new Tree(array);
+console.log('Is my tree balanced? ' + myTree.isBalanced());
+multiPrintArray(myTree);
+myTree.insertValue(110);
+myTree.insertValue(114);
+myTree.insertValue(115);
+myTree.insertValue(117);
+myTree.insertValue(119);
+console.log('Is my tree balanced? ' + myTree.isBalanced());
+console.log('Calling rebalance()');
+myTree.rebalance();
+console.log('Is my tree balanced? ' + myTree.isBalanced());
+multiPrintArray(myTree);
+
