@@ -8,63 +8,63 @@ export class Node {
 
 export class Tree {
   constructor(array) {
-    this.root = this.buildTree(array);
+    this.root = this.#buildTree(array);
   }
 
-  buildTree(array) {
+  #buildTree(array) {
     let set = new Set();
     array.forEach(value => {
       set.add(value);
     });
     let uniqueValueArray = [...set];
     uniqueValueArray.sort((a, b) => a - b );
-    let root = this.recurBuildTree(uniqueValueArray, 0, uniqueValueArray.length -1);
+    let root = this.#recurBuildTree(uniqueValueArray, 0, uniqueValueArray.length -1);
     return root;
   }
 
   // Could do this with passing slice() arrays around, but just using references
   // to the same array saves memory
-  recurBuildTree(array, start, end) {
+  #recurBuildTree(array, start, end) {
     if (start > end) return null;
 
     let mid = start + Math.floor((end - start) / 2);
     let root = new Node(array[mid]);
 
-    root.left = this.recurBuildTree(array, start, mid - 1);
-    root.right = this.recurBuildTree(array, mid + 1, end)
+    root.left = this.#recurBuildTree(array, start, mid - 1);
+    root.right = this.#recurBuildTree(array, mid + 1, end)
 
     return root;
   }
 
   insertValue(data) {
-    this.recurInsertValue(this.root, data);
+    this.#recurInsertValue(this.root, data);
   }
 
-  recurInsertValue(root, data) {
+  #recurInsertValue(root, data) {
     if (root === null) return new Node(data);
 
     if (data < root.data) {
-      root.left = this.recurInsertValue(root.left, data);
+      root.left = this.#recurInsertValue(root.left, data);
     } else {
-      root.right = this.recurInsertValue(root.right, data);
+      root.right = this.#recurInsertValue(root.right, data);
     }
 
     return root;
   }
 
   deleteValue(value) {
-    this.recurDeleteValue(this.root, value);
+    this.#recurDeleteValue(this.root, value);
   }
 
-  recurDeleteValue(root, data) {
+  #recurDeleteValue(root, data) {
     if (root === null) {
       return root;
     }
 
     if (data < root.data) {
-      root.left = this.recurDeleteValue(root.left, data);
+      root.left = this.#recurDeleteValue(root.left, data);
     } else if (data > root.data) {
-      root.right = this.recurDeleteValue(root.right, data);
+      root.right = this.#recurDeleteValue(root.right, data);
     } else {
       // 0 or 1 child
       if (root.left === null) {
@@ -74,14 +74,14 @@ export class Tree {
         return root.left;
       }
       // 2 children
-      let largestPredecessor = this.getLargestPredecessor(root.left);
+      let largestPredecessor = this.#getLargestPredecessor(root.left);
       root.data = largestPredecessor.data;
-      root.left = this.recurDeleteValue(root.left, largestPredecessor.data);
+      root.left = this.#recurDeleteValue(root.left, largestPredecessor.data);
     }
     return root;
   }
 
-  getLargestPredecessor(root) {
+  #getLargestPredecessor(root) {
     let currentNode = root;
     while (currentNode !== null && currentNode.right !==null) {
       currentNode = currentNode.right;
@@ -90,17 +90,17 @@ export class Tree {
   }
 
   find(value) {
-    return this.recurFind(this.root, value)
+    return this.#recurFind(this.root, value)
   }
 
-  recurFind(root, data) {
+  #recurFind(root, data) {
     if (root === null) {
       return null;
     }
     if (data < root.data) {
-      root = this.recurFind(root.left, data);
+      root = this.#recurFind(root.left, data);
     } else if (data > root.data) {
-      root = this.recurFind(root.right, data);
+      root = this.#recurFind(root.right, data);
     }
     return root;
   }
@@ -133,17 +133,17 @@ export class Tree {
       throw new Error("Callback required as argument!");
     }
     try {
-      this.recurInOrderForEach(callback, this.root);
+      this.#recurInOrderForEach(callback, this.root);
     } catch (e) {
       console.log(e);
     }
   }
 
-  recurInOrderForEach(callback, root) {
+  #recurInOrderForEach(callback, root) {
     if (root === null) return;
-    this.recurInOrderForEach(callback, root.left);
+    this.#recurInOrderForEach(callback, root.left);
     callback(root);
-    this.recurInOrderForEach(callback, root.right);
+    this.#recurInOrderForEach(callback, root.right);
   }
 
   preOrderForEach(callback) {
@@ -151,17 +151,17 @@ export class Tree {
       throw new Error("Callback required as argument!");
     }
     try {
-      this.recurPreOrderForEach(callback, this.root);
+      this.#recurPreOrderForEach(callback, this.root);
     } catch (e) {
       console.log(e);
     }
   }
 
-  recurPreOrderForEach(callback, root) {
+  #recurPreOrderForEach(callback, root) {
     if (root === null) return;
     callback(root);
-    this.recurPreOrderForEach(callback, root.left);
-    this.recurPreOrderForEach(callback, root.right);
+    this.#recurPreOrderForEach(callback, root.left);
+    this.#recurPreOrderForEach(callback, root.right);
   }
 
   postOrderForEach(callback) {
@@ -169,16 +169,16 @@ export class Tree {
       throw new Error("Callback required as argument!");
     }
     try {
-      this.recurPostOrderForEach(callback, this.root);
+      this.#recurPostOrderForEach(callback, this.root);
     } catch (e) {
       console.log(e);
     }
   }
 
-  recurPostOrderForEach(callback, root) {
+  #recurPostOrderForEach(callback, root) {
     if (root === null) return;
-    this.recurPostOrderForEach(callback, root.left);
-    this.recurPostOrderForEach(callback, root.right);
+    this.#recurPostOrderForEach(callback, root.left);
+    this.#recurPostOrderForEach(callback, root.right);
     callback(root);
   }
 
@@ -186,18 +186,18 @@ export class Tree {
     let root = this.find(value);
     if (root === null) return null;
     let height;
-    let heightLeft = this.recurHeight(root.left);
-    let heightRight = this.recurHeight(root.right);
+    let heightLeft = this.#recurHeight(root.left);
+    let heightRight = this.#recurHeight(root.right);
     height = heightLeft > heightRight ? heightLeft : heightRight;
     return height;
   }
 
-  recurHeight(root) {
+  #recurHeight(root) {
     if (root === null) {
       return 0;
     }
-    let heightLeft = 1 + this.recurHeight(root.left);
-    let heightRight = 1 + this.recurHeight(root.right);
+    let heightLeft = 1 + this.#recurHeight(root.left);
+    let heightRight = 1 + this.#recurHeight(root.right);
     return heightLeft > heightRight ? heightLeft : heightRight;
   }
 
@@ -232,8 +232,8 @@ export class Tree {
     } else {
       heightRight = 0;
     }
-    balanceLeft = this.recurIsBalanced(root.left);
-    balanceRight = this.recurIsBalanced(root.right);
+    balanceLeft = this.#recurIsBalanced(root.left);
+    balanceRight = this.#recurIsBalanced(root.right);
 
     if (
       balanceLeft == true &&
@@ -246,7 +246,7 @@ export class Tree {
     }
   }
 
-  recurIsBalanced(root) {
+  #recurIsBalanced(root) {
     if (root === null) return true;
     let heightLeft, heightRight, balanceLeft, balanceRight;
     if(root.left) {
@@ -259,8 +259,8 @@ export class Tree {
     } else {
       heightRight = 0;
     }
-    balanceLeft = this.recurIsBalanced(root.left);
-    balanceRight = this.recurIsBalanced(root.right);
+    balanceLeft = this.#recurIsBalanced(root.left);
+    balanceRight = this.#recurIsBalanced(root.right);
 
     if (
       balanceLeft == true &&
@@ -278,6 +278,6 @@ export class Tree {
     this.levelOrderForEach((node) => {
       newArray.push(node.data);
     });
-    this.root = this.buildTree(newArray);
+    this.root = this.#buildTree(newArray);
   }
 }
