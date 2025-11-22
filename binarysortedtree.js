@@ -35,4 +35,73 @@ export class Tree {
 
     return root;
   }
+
+  insertValue(data) {
+    this.recurInsertValue(this.root, data);
+  }
+
+  recurInsertValue(root, data) {
+    if (root === null) return new Node(data);
+
+    if (data < root.data) {
+      root.left = this.recurInsertValue(root.left, data);
+    } else {
+      root.right = this.recurInsertValue(root.right, data);
+    }
+
+    return root;
+  }
+
+  deleteValue(value) {
+    this.recurDeleteValue(this.root, value);
+  }
+
+  recurDeleteValue(root, data) {
+    if (root === null) {
+      return root;
+    }
+
+    if (data < root.data) {
+      root.left = this.recurDeleteValue(root.left, data);
+    } else if (data > root.data) {
+      root.right = this.recurDeleteValue(root.right, data);
+    } else {
+      // 0 or 1 child
+      if (root.left === null) {
+        return root.right;
+      }
+      if (root.right === null) {
+        return root.left;
+      }
+      // 2 children
+      let largestPredecessor = this.getLargestPredecessor(root.left);
+      root.data = largestPredecessor.data;
+      root.left = this.recurDeleteValue(root.left, largestPredecessor.data);
+    }
+    return root;
+  }
+
+  getLargestPredecessor(root) {
+    let currentNode = root;
+    while (currentNode !== null && currentNode.right !==null) {
+      currentNode = currentNode.right;
+    }
+    return currentNode;
+  }
+
+  find(value) {
+    return this.recurFind(this.root, value)
+  }
+
+  recurFind(root, data) {
+    if (root === null) {
+      return null;
+    }
+    if (data < root.data) {
+      root = this.recurFind(root.left, data);
+    } else if (data > root.data) {
+      root = this.recurFind(root.right, data);
+    }
+    return root;
+  }
 }
