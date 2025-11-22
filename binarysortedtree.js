@@ -200,4 +200,22 @@ export class Tree {
     let heightRight = 1 + this.recurHeight(root.right);
     return heightLeft > heightRight ? heightLeft : heightRight;
   }
+
+  depth(value) {
+    let target = this.find(value);
+    if (target === null) {
+      return null;
+    }
+    let depth = 0;
+    let currentNode = this.root;
+    while (currentNode.data != value) {
+      if (value < currentNode.data) {
+        currentNode = currentNode.left;
+      } else if (value > currentNode.data) {
+        currentNode = currentNode.right;
+      }
+      depth += 1;
+    }
+    return depth;
+  }
 }

@@ -60,3 +60,7 @@ prettyPrint(testTree.root);
 console.log(testTree.height(4));
 console.log(testTree.height(11));
 console.log(testTree.height(19));
+prettyPrint(testTree.root);
+console.log(testTree.depth(9));
+console.log(testTree.depth(6));
+console.log(testTree.depth(8));
