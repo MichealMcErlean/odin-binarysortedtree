@@ -104,4 +104,27 @@ export class Tree {
     }
     return root;
   }
+
+  levelOrderForEach(callback) {
+    if (!callback) {
+      throw new Error("Callback required as argument!");
+    }
+    try {
+      let queue = [];
+      let currentNode;
+      queue.push(this.root);
+      do {
+        currentNode = queue.shift();
+        if (currentNode.left !== null) {
+          queue.push(currentNode.left);
+        }
+        if (currentNode.right !== null) {
+          queue.push(currentNode.right);
+        }
+        callback(currentNode);
+      } while (queue.length > 0);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }

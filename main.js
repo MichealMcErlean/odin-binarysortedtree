@@ -40,6 +40,10 @@ testTree.deleteValue(47);
 prettyPrint(testTree.root);
 // testTree.deleteValue(4);
 // prettyPrint(testTree.root);
-console.log(testTree.find(7));
-console.log(testTree.find(13));
-console.log(testTree.find(18));
+// console.log(testTree.find(7));
+// console.log(testTree.find(13));
+// console.log(testTree.find(18));
+testTree.levelOrderForEach((node) => {
+  console.log(node.data);
+});
+testTree.levelOrderForEach();
