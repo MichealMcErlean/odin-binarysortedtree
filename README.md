@@ -16,5 +16,7 @@ Implements the following methods:
 
 ## Take-aways
 I learnt how effective recursion is when it's appropriate. I'm not even sure how to begin approaching implementing some of these methods using iteration instead.
+
 I need to go re-acquaint myself with the private member syntax for class methods. I have all these helper methods just hanging around that don't need to be publically exposed.
+
 I realized how much progress I've already made doing the Odin Project. I honestly felt like `height(value)` and `depth(value)` were going to be road-blocks, but I managed to reason them out relatively painlessly. It's nice to feel like you're making progress.
