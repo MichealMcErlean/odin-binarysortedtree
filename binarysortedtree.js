@@ -181,4 +181,23 @@ export class Tree {
     this.recurPostOrderForEach(callback, root.right);
     callback(root);
   }
+
+  height(value) {
+    let root = this.find(value);
+    if (root === null) return null;
+    let height;
+    let heightLeft = this.recurHeight(root.left);
+    let heightRight = this.recurHeight(root.right);
+    height = heightLeft > heightRight ? heightLeft : heightRight;
+    return height;
+  }
+
+  recurHeight(root) {
+    if (root === null) {
+      return 0;
+    }
+    let heightLeft = 1 + this.recurHeight(root.left);
+    let heightRight = 1 + this.recurHeight(root.right);
+    return heightLeft > heightRight ? heightLeft : heightRight;
+  }
 }

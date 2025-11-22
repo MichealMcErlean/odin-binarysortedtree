@@ -56,3 +56,7 @@ testTree.preOrderForEach((node) => {
 testTree.postOrderForEach((node) => {
   console.log(node.data);
 });
+prettyPrint(testTree.root);
+console.log(testTree.height(4));
+console.log(testTree.height(11));
+console.log(testTree.height(19));
