@@ -50,3 +50,9 @@ testTree.levelOrderForEach((node) => {
 testTree.inOrderForEach((node) => {
   console.log(node.data);
 });
+testTree.preOrderForEach((node) => {
+  console.log(node.data);
+});
+testTree.postOrderForEach((node) => {
+  console.log(node.data);
+});

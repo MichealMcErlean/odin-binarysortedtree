@@ -145,4 +145,40 @@ export class Tree {
     callback(root);
     this.recurInOrderForEach(callback, root.right);
   }
+
+  preOrderForEach(callback) {
+    if (!callback) {
+      throw new Error("Callback required as argument!");
+    }
+    try {
+      this.recurPreOrderForEach(callback, this.root);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  recurPreOrderForEach(callback, root) {
+    if (root === null) return;
+    callback(root);
+    this.recurPreOrderForEach(callback, root.left);
+    this.recurPreOrderForEach(callback, root.right);
+  }
+
+  postOrderForEach(callback) {
+    if (!callback) {
+      throw new Error("Callback required as argument!");
+    }
+    try {
+      this.recurPostOrderForEach(callback, this.root);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  recurPostOrderForEach(callback, root) {
+    if (root === null) return;
+    this.recurPostOrderForEach(callback, root.left);
+    this.recurPostOrderForEach(callback, root.right);
+    callback(root);
+  }
 }
